@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import archive
 # import makesig
 import exceptions
 import os
-from os.path import dirname, exists, join, realpath
+import archive
+from archive import Archive, resign
+from os.path import dirname, exists, join, realpath, expanduser
 
 # this comes with the repo
 PACKAGE_ROOT = dirname(realpath(__file__))
@@ -35,7 +36,10 @@ def get_credential_paths(directory, file_names=DEFAULT_CREDENTIAL_FILE_NAMES):
 #   ~/isign-credentials/mobdev.cert.pem, etc.
 # But the new way that everyone should now use:
 #   ~/.isign/certificate.pem, etc.
-if exists(join(os.environ['HOME'], 'isign-credentials')):
+
+home = expanduser("~")
+
+if exists(join(home, 'isign-credentials')):
     DEFAULT_CREDENTIAL_PATHS = get_credential_paths(
         join(os.environ['HOME'], 'isign-credentials'),
         {
@@ -46,7 +50,7 @@ if exists(join(os.environ['HOME'], 'isign-credentials')):
     )
 else:
     DEFAULT_CREDENTIAL_PATHS = get_credential_paths(
-        join(os.environ['HOME'], '.isign')
+        join(home, '.isign')
     )
 
 

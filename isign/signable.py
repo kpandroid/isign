@@ -258,6 +258,7 @@ class Signable(object):
         os.chmod(temp.name, mode)
         # log.debug("moving temporary file to {0}".format(self.path))
         shutil.move(temp.name, self.path)
+        self.f.close()
 
 
 class Executable(Signable):
