@@ -30,7 +30,7 @@ def is_info_plist_native(plist):
     """ If an bundle is for native iOS, it has these properties in the Info.plist """
     return (
         'CFBundleSupportedPlatforms' in plist and
-        'iPhoneOS' in plist['CFBundleSupportedPlatforms']
+        any(c in plist['CFBundleSupportedPlatforms'] for c in ('iPhoneOS', 'AppleTVOS'))
     )
 
 
